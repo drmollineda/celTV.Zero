@@ -1,0 +1,84 @@
+diff -Naurp overlays/Makefile overlays-mod/Makefile
+--- a/arch/arm/boot/dts/overlays/Makefile	2018-04-07 18:10:01.000000000 -0400
++++ b/arch/arm/boot/dts/overlays/Makefile	2021-05-25 11:15:39.934349328 -0400
+@@ -1,6 +1,8 @@
+ # Overlays for the Raspberry Pi platform
+ 
+ dtbo-$(CONFIG_ARCH_BCM2835) += \
++	pi-dtmb-hat.dtbo \
++	pi-fd.dtbo \
+ 	adau1977-adc.dtbo \
+ 	adau7002-simple.dtbo \
+ 	ads1015.dtbo \
+diff -Naurp overlays/pi-dtmb-hat-overlay.dts overlays-mod/pi-dtmb-hat-overlay.dts
+--- a/arch/arm/boot/dts/overlays/pi-dtmb-hat-overlay.dts	1969-12-31 19:00:00.000000000 -0500
++++ b/arch/arm/boot/dts/overlays/pi-dtmb-hat-overlay.dts	2021-05-25 11:13:47.722346454 -0400
+@@ -0,0 +1,49 @@
++/dts-v1/;
++/plugin/;
++
++/ {
++    compatible = "brcm,bcm2835";
++
++    fragment@0 {
++        target = <&smi>;
++        __overlay__ {
++            compatible = "brcm,bcm2835-smi,smi-lite";
++            pinctrl-names = "default";
++            pinctrl-0 = <&smi_pins>;
++            assigned-clock-rates = <476000000>;
++            status = "okay";
++        };
++    };
++
++    fragment@1 {
++        target = <&gpio>;
++        __overlay__ {
++            smi_pins: smi_pins {
++                brcm,pins = <7 8 9 10 11 12 13 14 15 24>;
++                brcm,function = <5 5 5 5 5 5 5 5 5 5>;
++                brcm,pull = <2 0 0 0 0 0 0 0 0 0>;
++            };
++        };
++    };
++
++    fragment@2 {
++        target-path = "/";
++        __overlay__ {
++            pi_hat_dvb {
++                compatible = "dvb,pi_hat_dvb";
++
++                /* Configuration */
++                i2c_adap_index = <0x03>;
++                i2c_addr_demod = <0x14>;
++                i2c_addr_tuner = <0x60>;
++
++                /* Handle for SMI instance retrieval */
++                smi_handle = <&smi>;
++
++                /* Timer-related GPIO */
++                irq-gpios = <&gpio 27 0>;
++                reset-gpios = <&gpio 6 0>;
++            };
++        };
++    };
++};
+diff -Naurp overlays/pi-fd-overlay.dts overlays-mod/pi-fd-overlay.dts
+--- a/arch/arm/boot/dts/overlays/pi-fd-overlay.dts	1969-12-31 19:00:00.000000000 -0500
++++ b/arch/arm/boot/dts/overlays/pi-fd-overlay.dts	2021-05-25 11:13:47.722346454 -0400
+@@ -0,0 +1,15 @@
++/dts-v1/;
++/plugin/;
++
++/ {
++    compatible = "brcm,bcm2835";
++
++    fragment@0 {
++        target-path = "/";
++        __overlay__ {
++            fd650s_key {
++                compatible = "fd650s_key";
++            };
++        };
++    };
++};
