@@ -22,7 +22,10 @@ PKG_ARCH="any"
 PKG_LICENSE="various"
 PKG_SITE="http://www.libreelec.tv"
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain $PROJECT"
+PKG_DEPENDS_TARGET="toolchain tvheadend42-standalone script.module.certifi script.module.chardet script.module.idna \
+ script.program.channelscanner script.program.databroadcast script.module.requests \
+ script.module.urllib3 plugin.video.picta pvr.hts inputstream.adaptive \
+ v4l-utils script.program.usbupdate"
 PKG_SECTION="virtual"
 PKG_SHORTDESC="OEM: Metapackage for various OEM packages"
 PKG_LONGDESC="OEM: Metapackage for various OEM packages"

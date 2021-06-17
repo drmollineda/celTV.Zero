@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<window>
+    <defaultcontrol>102</defaultcontrol>
+    <controls>
+        <control type="image">
+            <left>-2000</left>
+            <top>-2000</top>
+            <width>6000</width>
+            <height>6000</height>
+            <animation effect="fade" time="300">VisibleChange</animation>
+            <animation effect="fade" start="0" end="100" time="300">WindowOpen</animation>
+            <animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
+            <texture colordiffuse="C2FFFFFF">colors/black.png</texture>
+        </control>
+        <control type="image">
+            <centerleft>50%</centerleft>
+            <centertop>50%</centertop>
+            <width>720</width>
+            <height>360</height>
+            <texture colordiffuse="ff222222">colors/white.png</texture>
+        </control>
+        <control type="group">
+            <centerleft>50%</centerleft>
+            <centertop>50%</centertop>
+            <width>720</width>
+            <height>360</height>
+            <control type="button" id="102">
+                <onright>103</onright>
+                <left>0</left>
+                <top>0</top>
+                <width>240</width>
+                <align>center</align>
+                <aligny>center</aligny>
+                <height>240</height>
+                <label>Escaneo[CR]Completo</label>
+            </control>
+            <control type="button" id="103">
+                <onright>104</onright>
+                <onleft>102</onleft>
+                <left>240</left>
+                <top>0</top>
+                <width>240</width>
+                <height>240</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <label>Escanear un[CR]Rango de Canales</label>
+            </control>
+            <control type="button" id="104">
+                <onleft>103</onleft>
+                <left>480</left>
+                <top>0</top>
+                <width>240</width>
+                <height>240</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <label>Escanear un[CR]Canal en Específico</label>
+            </control>
+            <control type="label" id="5">
+                <centerleft>50%</centerleft>
+                <top>260</top>
+                <align>center</align>
+                <width>505</width>
+                <height>80</height>
+                <wrapmultiline>true</wrapmultiline>
+                <label>Seleccione un tipo de escaneo</label>
+            </control>
+        </control>
+    </controls>
+</window>

@@ -1,0 +1,230 @@
+<window>
+    <defaultcontrol>199</defaultcontrol>
+    <controls>
+
+        <!-- Background -->
+        <control type="image">
+            <width>100%</width>
+            <height>100%</height>
+            <texture>$INFO[Window.Property(dbc_background)]</texture>
+        </control>
+        
+        <control type="image">
+            <width>480</width>
+            <height>32</height>
+            <top>4</top>
+            <left>4</left>
+            <texture colordiffuse="55333333">colors/white.png</texture>
+        </control>
+        <control type="label">
+            <width>480</width>
+            <height>32</height>
+            <top>4</top>
+            <left>4</left>
+            <align>center</align>
+            <aligny>center</aligny>
+            <label>$INFO[System.Date]</label>
+        </control>
+
+        <!-- Base container -->
+        <control type="group">
+            <centerleft>50%</centerleft>
+            <centertop>50%</centertop>
+            <width>720</width>
+            <height>720</height>
+
+            <!-- Top header -->
+            <control type="image">
+                <top>24</top>
+                <centerleft>50%</centerleft>
+                <width>180</width>
+                <height>36</height>
+                <texture>$INFO[Window.Property(dbc_top_header)]</texture>
+            </control>
+
+            <!-- Dialog background -->
+            <control type="image">
+                <top>90</top>
+                <width>710</width>
+                <height>500</height>
+                <centerleft>50%</centerleft>
+                <texture>dialogs/dialog-bg-nobo.png</texture>
+            </control>
+
+            <!-- Title -->
+            <control type="image">
+                <centerleft>50%</centerleft>
+                <top>90</top>
+                <width>710</width>
+                <height>32</height>
+                <texture colordiffuse="22999999">colors/white.png</texture>
+            </control>
+            <control type="label">
+                <top>90</top>
+                <centerleft>50%</centerleft>
+                <width>710</width>
+                <height>32</height>
+                <align>center</align>
+                <aligny>center</aligny>
+                <label>$INFO[Window.Property(title)]</label>
+            </control>
+
+            <!-- Headers -->
+            <control type="group" id="199">
+                <top>124</top>
+                <centerleft>50%</centerleft>
+                <width>710</width>
+                <height>32</height>
+
+                <control type="button" id="100">
+                    <visible>!String.IsEmpty(Window.Property(text))</visible>
+                    <height>32</height>
+                    <onright>101</onright>
+                    <ondown>103</ondown>
+                    <width>236</width>
+                    <label>Texto</label>
+                    <align>center</align>
+                    <texturenofocus colordiffuse="44aaaaaa">colors/white.png</texturenofocus>
+                    <texturefocus colordiffuse="button_focus">colors/grey.png</texturefocus>
+                    <onclick>SetProperty(selected, text)</onclick>
+                </control>
+
+                <control type="button" id="101">
+                    <visible>!String.IsEmpty(Window.Property(text))</visible>
+                    <height>32</height>
+                    <onleft>101</onleft>
+                    <onright>102</onright>
+                    <ondown>103</ondown>
+                    <width>236</width>
+                    <label>Texto</label>
+                    <align>center</align>
+                    <texturenofocus colordiffuse="44aaaaaa">colors/white.png</texturenofocus>
+                    <texturefocus colordiffuse="button_focus">colors/grey.png</texturefocus>
+                    <onclick>SetProperty(selected, text)</onclick>
+                </control>
+
+                <control type="button" id="102">
+                    <visible>!String.IsEmpty(Window.Property(text))</visible>
+                    <height>32</height>
+                    <onleft>101</onleft>
+                    <ondown>103</ondown>
+                    <width>236</width>
+                    <label>Texto</label>
+                    <align>center</align>
+                    <texturenofocus colordiffuse="44aaaaaa">colors/white.png</texturenofocus>
+                    <texturefocus colordiffuse="button_focus">colors/grey.png</texturefocus>
+                    <onclick>SetProperty(selected, text)</onclick>
+                </control>
+
+            </control>
+
+            <!-- Text layout -->
+            <control type="group">
+                <visible>String.IsEqual(Window.Property(selected), text)</visible>
+                <top>160</top>
+                <width>710</width>
+                <height>428</height>
+                <centerleft>50%</centerleft>
+
+                <control type="textbox">
+                    <width>690</width>
+                    <centerleft>50%</centerleft>
+                    <align>left</align>
+                    <aligny>top</aligny>
+                    <label>$INFO[Window.Property(text)]</label>
+                    <pagecontrol>103</pagecontrol>
+                </control>
+
+                <control type="scrollbar" id="103">
+                    <onup>100</onup>
+                    <width>4</width>
+                    <left>4r</left>
+                    <showonepage>true</showonepage>
+                </control>
+            </control>
+
+            <!-- Image layout -->
+            <control type="group">
+                <visible>String.IsEqual(Window.Property(selected), image)</visible>
+                <top>160</top>
+                <width>710</width>
+                <height>428</height>
+                <control type="image">
+                    <texture>$INFO[Window.Property(image)]</texture>
+                </control>
+            </control>
+
+            <!-- Table layout -->
+            <control type="group" id="120">
+                <visible>String.IsEqual(Window.Property(selected), table)</visible>
+                <top>160</top>
+                <width>710</width>
+                <centerleft>50%</centerleft>
+
+                <!-- Header row -->
+                <control type="image">
+                    <width>704</width>
+                    <height>32</height>
+                    <centerleft>50%</centerleft>
+                    <texture colordiffuse="22999999">colors/white.png</texture>
+                </control>
+
+                <control type="label" id="121">
+                    <centerleft>50%</centerleft>
+                    <width>704</width>
+                    <height>32</height>
+                    <align>left</align>
+                    <aligny>center</aligny>
+                    <label>Placeholder</label>
+                    <font>Mono26</font>
+                </control>
+
+                <!-- Actual "table" -->
+                <control type="list" id="122">
+                    <top>36</top>
+                    <onup>100</onup>
+                    <centerleft>50%</centerleft>
+
+                    <!-- Unfocused row layout -->
+                    <itemlayout height="32">
+                        <control type="label">
+                            <centerleft>50%</centerleft>
+                            <width>704</width>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <font>Mono26</font>
+                            <label>$INFO[ListItem.Label]</label>
+                        </control>
+                    </itemlayout>
+
+                    <!-- Focused row layout -->
+                    <focusedlayout height="32">
+                        <control type="image">
+                            <texture colordiffuse="button_focus">colors/grey.png</texture>
+                            <include>Animation_FocusTextureFade</include>
+                        </control>
+                        <control type="label">
+                            <centerleft>50%</centerleft>
+                            <width>704</width>
+                            <align>left</align>
+                            <aligny>center</aligny>
+                            <font>Mono26</font>
+                            <label>$INFO[ListItem.Label]</label>
+                        </control>
+                    </focusedlayout>
+                </control>
+            </control>
+
+            <!-- Navigation footer -->
+            <control type="image">
+                <centerleft>50%</centerleft>
+                <width>710</width>
+                <top>594</top>
+                <height>56</height>
+                <texture>$INFO[Window.Property(dbc_hint)]</texture>
+            </control>
+
+        </control>
+
+    </controls>
+</window>

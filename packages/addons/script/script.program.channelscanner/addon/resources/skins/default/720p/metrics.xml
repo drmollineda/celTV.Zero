@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<window>
+    <controls>
+        <control type="image">
+            <centerleft>50%</centerleft>
+            <top>10</top>
+            <width>700</width>
+            <height>360</height>
+            <texture colordiffuse="ff222222">colors/white.png</texture>
+        </control>
+        <!--
+        <control type="label">
+            <left>260</left>
+            <top>85</top>
+            <width>600</width>
+            <height>50</height>
+            <aligny>bottom</aligny>
+            <label>$INFO[PVR.ActStreamSignal,[COLOR button_focus]Intensidad:[/COLOR] ]</label>
+            <font>font14</font>
+            <shadowcolor>black</shadowcolor>
+        </control>
+        <control type="progress">
+            <left>260</left>
+            <top>135</top>
+            <width>600</width>
+            <height>18</height>
+            <info>PVR.ActStreamProgrSignal</info>
+        </control>
+        <control type="label">
+            <left>260</left>
+            <top>165</top>
+            <width>1600</width>
+            <height>50</height>
+            <aligny>bottom</aligny>
+            <label>$INFO[PVR.ActStreamSNR,[COLOR button_focus]Calidad:[/COLOR] ]</label>
+            <font>font14</font>
+            <shadowcolor>black</shadowcolor>
+        </control>
+        <control type="progress">
+            <left>260</left>
+            <top>215</top>
+            <width>600</width>
+            <height>18</height>
+            <info>PVR.ActStreamProgrSNR</info>
+        </control>
+        -->
+    </controls>
+</window>

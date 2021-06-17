@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<window>
+    <controls>
+
+        <!-- Background -->
+        <control type="image">
+            <width>100%</width>
+            <height>100%</height>
+            <texture>$INFO[Window.Property(dbc_background)]</texture>
+        </control>
+
+        <control type="image">
+            <width>480</width>
+            <height>32</height>
+            <top>4</top>
+            <left>4</left>
+            <texture colordiffuse="55333333">colors/white.png</texture>
+        </control>
+        <control type="label">
+            <width>480</width>
+            <height>32</height>
+            <top>4</top>
+            <left>4</left>
+            <align>center</align>
+            <aligny>center</aligny>
+            <label>$INFO[System.Date]</label>
+        </control>
+
+        <!-- Base container -->
+        <control type="group">
+            <centerleft>50%</centerleft>
+            <centertop>50%</centertop>
+            <width>720</width>
+            <height>720</height>
+
+            <!-- Top header -->
+            <control type="image">
+                <top>24</top>
+                <centerleft>50%</centerleft>
+                <width>180</width>
+                <height>36</height>
+                <texture>$INFO[Window.Property(dbc_top_header)]</texture>
+            </control>
+
+            <!-- Main items -->
+            <control type="panel" id="100">
+                <top>150</top>
+                <centerleft>50%</centerleft>
+                <width>540</width>
+                <height>340</height>
+                <orientation>vertical</orientation>
+
+                <!-- Base item layout -->
+                <itemlayout width="270" height="170">
+                    <control type="image">
+                        <texture>$INFO[ListItem.Property(icon)]</texture>
+                    </control>
+                </itemlayout>
+
+                <!-- Focused item layout -->
+                <focusedlayout width="270" height="170">
+                    <control type="image">
+                        <texture>$INFO[ListItem.Property(icon)]</texture>
+                    </control>
+                    <control type="image">
+                        <texture colordiffuse="55333333">colors/white.png</texture>
+                        <!--<bordertexture colordiffuse="ffff0000">colors/white.png</bordertexture>
+                        <border>3</border>-->
+                    </control>
+                </focusedlayout>
+            </control>
+
+            <!-- Navigation footer -->
+            <control type="image">
+                <centerleft>50%</centerleft>
+                <width>710</width>
+                <top>594</top>
+                <height>56</height>
+                <texture>$INFO[Window.Property(dbc_hint)]</texture>
+            </control>
+        </control>
+
+    </controls>
+</window>

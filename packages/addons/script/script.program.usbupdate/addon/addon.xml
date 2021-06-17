@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.program.usbupdate" name="Asistente de actualización" version="0.0.1" provider-name="David R. Mollineda">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+    </requires>
+    <extension point="xbmc.python.script" library="main.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="es_ES">Asistente de actualización para el sistema</summary>
+        <description lang="es_ES">
+            Asistente para la actualización manual del sistema. Seleccione el fichero de actualización y espere a que
+            el dispositivo se reinicie.
+        </description>
+        <platform>all</platform>
+    </extension>
+</addon>
