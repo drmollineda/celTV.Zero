@@ -13,7 +13,7 @@ index e69fd6a..c0fe122 100644
  *	rc-real-audio-220-32-keys real_audio_220_32_keys
  *	rc-reddo                 reddo
  *	rc-snapstream-firefly    snapstream_firefly
-@@ -136,6 +138,13 @@
+@@ -136,6 +138,14 @@
  *	rc-videomate-tv-pvr      videomate_tv_pvr
  *	rc-winfast-usbii-deluxe  winfast_usbii_deluxe
  *	rc-winfast               winfast
@@ -24,6 +24,7 @@ index e69fd6a..c0fe122 100644
 +*	rc-xbox-360              xbox_360
 +*	rc-xbox-one              xbox_one
 +*	rc-zotac-ad10            zotac_ad10
++*  *                        atec
  # *	*			 a800                 # found in a800.c
  # *	*			 af9005               # found in af9005-remote.c
  # *	*			 cinergyt2            # found in cinergyT2-core.c

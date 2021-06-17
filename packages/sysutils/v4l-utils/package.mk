@@ -57,7 +57,7 @@ post_makeinstall_target() {
 
   (
     echo "# table libreelec_multi, type: RC6 NEC"
-    for f in rc6_mce xbox_360 zotac_ad10 hp_mce xbox_one cubox_i ; do
+    for f in rc6_mce xbox_360 zotac_ad10 hp_mce xbox_one cubox_i atec ; do
       echo "# $f"
       grep -v "^#" $INSTALL/usr/lib/udev/rc_keymaps/$f
     done
