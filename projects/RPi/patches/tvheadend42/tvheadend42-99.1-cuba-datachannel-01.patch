@@ -1,0 +1,168 @@
+diff -Naurp a/src/input/mpegts/dvb.h b/src/input/mpegts/dvb.h
+--- a/src/input/mpegts/dvb.h	2019-01-09 04:42:11.000000000 -0500
++++ b/src/input/mpegts/dvb.h	2019-04-04 15:09:56.046494164 -0400
+@@ -49,6 +49,7 @@ struct lang_str;
+ #define DVB_MSR_PID                   0x1D
+ #define DVB_DIT_PID                   0x1E
+ #define DVB_SIT_PID                   0x1F
++#define DVB_DBC_PID                   0x200
+ #define DVB_VCT_PID                   0x1FFB
+ #define DVB_ATSC_STT_PID              0x1FFB
+ #define DVB_ATSC_MGT_PID              0x1FFB
+@@ -79,6 +80,9 @@ struct lang_str;
+ #define DVB_TOT_BASE                  0x73
+ #define DVB_TOT_MASK                  0xFF
+ 
++#define DVB_DBC_BASE                  0x90
++#define DVB_DBC_MASK                  0xFF
++
+ #define DVB_HBBTV_BASE                0x74
+ #define DVB_HBBTV_MASK                0xFF
+ 
+diff -Naurp a/src/input/mpegts/dvb_psi.c b/src/input/mpegts/dvb_psi.c
+--- a/src/input/mpegts/dvb_psi.c	2019-01-09 04:42:11.000000000 -0500
++++ b/src/input/mpegts/dvb_psi.c	2019-04-09 11:32:47.025609116 -0400
+@@ -36,6 +36,9 @@
+ #include <unistd.h>
+ #include <stdlib.h>
+ #include <string.h>
++#include <fcntl.h>
++#include <sys/types.h>
++#include <sys/stat.h>
+ 
+ #define PRIV_FSAT (('F' << 24) | ('S' << 16) | ('A' << 8) | 'T')
+ 
+@@ -1748,6 +1751,111 @@ dvb_sdt_mux
+   return 0;
+ }
+ 
++/**
++ * DBC (Data Broadcasting Channel) PSI Table processing.
++ *
++ * Store PSI information on the filesystem in order to be consumed by
++ * the frontend client.
++ */
++static unsigned char __dbc_should_create = 1;
++
++int 
++dvb_dbc_callback
++	(mpegts_table_t *mt, const uint8_t *ptr, int len, int tableid) 
++{
++	int r, sect, last, ver, exid;
++	uint16_t onid, tsid;
++
++	struct stat stat_dir;
++
++	char filename[64];
++	char buf[1024];
++
++	unsigned char test = 0;
++	unsigned char *tmp = NULL;
++
++	int size, i, j, wc = 0, lr = 1;
++	int file;
++	
++	const char *homedir = getenv("DB_RAMDISK");
++	mpegts_psi_table_state_t *st =  NULL;
++
++	/* Begin */
++	tsid = extract_onid(ptr);
++	onid = extract_tsid(ptr + 5);
++	exid = ((int) onid) << 16 | tsid;
++
++	if (tableid != 0x90) return -1;
++	r = dvb_table_begin((mpegts_psi_table_t *)mt, ptr, len, 
++			    tableid, exid, 8, &st, &sect, &last, &ver);
++
++	if (r != 1) return r;
++
++	/* Check if the output directory exists, otherwise create it. */
++	if (__dbc_should_create) {
++		snprintf(buf, sizeof(buf), "%s/data", homedir);
++		if (stat(buf, &stat_dir) < 0 && mkdir(buf, 0700) < 0) {
++			tvhwarn(mt->mt_subsys, "Failed to create data broadcast directory");
++			return dvb_table_end((mpegts_psi_table_t *) mt, st, sect);
++		} else {
++			__dbc_should_create = 0;
++		}
++	}
++
++	/* Extract filename. */
++	size = ptr[5];
++	i = 0;
++	j = 6;
++
++	for (; i < size; ++i, ++j) {
++		filename[i] = ptr[j];
++	}
++
++	filename[i] = 0;
++
++	/* Extract data size. */
++	j += 2;
++	size = (ptr[j] << 8) | ptr[j + 1];
++	j += 2;
++
++	/* Prepare file to store information. */
++	snprintf(buf, sizeof(buf), "%s/data/%s", homedir, filename);
++	
++	/* Check if information must be written to a new file or appended to the end of an existing one. */
++	if (sect == 0) {
++		file = open(buf, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU | S_IRGRP | S_IROTH);
++	} else {
++		file = open(buf, O_WRONLY | O_APPEND);	
++	}
++
++	/* Purge any XML 1.0/ISO-8859-1 invalid characters from the data, because some people seem unable to do their
++	 * work properly... Tch! */
++	tmp = malloc(size * sizeof(unsigned char));
++
++	for (i = 0; i < size; i++) {
++	    test = ptr[j + i];
++	    if (test < 0x20 && test != 0x9 && test != 0xa && test != 0xd) { test = 0x20; /* whitespace */ }
++	    tmp[i] = test;
++	}
++
++	/* Save the file. */
++	if (file >= 0) {
++		while (wc != size && lr >= 0) {
++			lr = write(file, &tmp[wc], size - wc);
++			if (lr <= 0) {
++				tvhwarn(mt->mt_subsys, "An error occurred while saving the file %s", buf);
++			} else { wc += lr; }
++		};
++		close(file);
++	} else {
++		tvhwarn(mt->mt_subsys, "Failed to open file for writing");
++	}
++
++	/* Done */
++	free(tmp);
++	return dvb_table_end((mpegts_psi_table_t *)mt, st, sect);
++}
++
+ int
+ dvb_sdt_callback
+   (mpegts_table_t *mt, const uint8_t *ptr, int len, int tableid)
+@@ -2736,6 +2844,9 @@ psi_tables_dvb ( mpegts_mux_t *mm )
+                    DVB_SDT_PID, MPS_WEIGHT_SDT);
+   mpegts_table_add(mm, DVB_BAT_BASE, DVB_BAT_MASK, dvb_bat_callback,
+                    NULL, "bat", LS_TBL_BASE, MT_CRC, DVB_BAT_PID, MPS_WEIGHT_BAT);
++  mpegts_table_add(mm, DVB_DBC_BASE, DVB_DBC_MASK, dvb_dbc_callback,
++		               NULL, "dbc", LS_TBL_BASE, MT_QUICKREQ | MT_CRC | MT_RECORD,
++                   DVB_DBC_PID, MPS_WEIGHT_TDT);
+   if (config.tvhtime_update_enabled) {
+     mpegts_table_add(mm, DVB_TDT_BASE, DVB_TDT_MASK, dvb_tdt_callback,
+                      NULL, "tdt", LS_TBL_TIME, MT_ONESHOT | MT_QUICKREQ | MT_RECORD,
+diff -Naurp a/src/input/mpegts.h b/src/input/mpegts.h
+--- a/src/input/mpegts.h	2019-01-09 04:42:11.000000000 -0500
++++ b/src/input/mpegts.h	2019-04-04 15:07:13.138494508 -0400
+@@ -1075,6 +1075,8 @@ int dvb_tdt_callback
+   (struct mpegts_table *mt, const uint8_t *ptr, int len, int tableid);
+ int dvb_tot_callback
+   (struct mpegts_table *mt, const uint8_t *ptr, int len, int tableid);
++int dvb_dbc_callback
++  (struct mpegts_table *mt, const uint8_t *ptr, int len, int tableid);
+ int atsc_vct_callback
+   (struct mpegts_table *mt, const uint8_t *ptr, int len, int tableid);
+ int atsc_stt_callback

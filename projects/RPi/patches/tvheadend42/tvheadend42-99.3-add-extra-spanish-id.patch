@@ -1,0 +1,11 @@
+--- a/src/lang_codes.c	2019-11-15 12:52:07.000000000 -0500
++++ b/src/lang_codes.c	2020-12-03 21:52:14.811173800 -0500
+@@ -408,7 +408,7 @@ const lang_code_t lang_codes[] = {
+   { "sog", NULL, NULL , "Sogdian" },
+   { "som", "so", NULL , "Somali" },
+   { "son", NULL, NULL , "Songhai languages" },
+-  { "spa", "es", NULL , "Spanish" },
++  { "spa", "es", "esp", "Spanish" },
+   { "srd", "sc", NULL , "Sardinian" },
+   { "srn", NULL, NULL , "Sranan Tongo" },
+   { "srp", "sr", NULL , "Serbian" },

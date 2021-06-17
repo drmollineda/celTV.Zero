@@ -1,0 +1,37 @@
+diff -Naurp a/src/input/mpegts/dvb_psi.c b/src/input/mpegts/dvb_psi.c
+--- a/src/input/mpegts/dvb_psi.c	2019-01-09 04:42:11.000000000 -0500
++++ b/src/input/mpegts/dvb_psi.c	2019-04-09 11:32:47.025609116 -0400
+@@ -1767,7 +1767,7 @@ int
+ dvb_dbc_callback
+ 	(mpegts_table_t *mt, const uint8_t *ptr, int len, int tableid) 
+ {
+-	int r, sect, last, ver, exid;
++	int r, sect, last, ver, exid, should_purge;
+ 	uint16_t onid, tsid;
+ 
+ 	struct stat stat_dir;
+@@ -1822,7 +1822,7 @@ dvb_dbc_callback
+ 	size = (ptr[j] << 8) | ptr[j + 1];
+ 	j += 2;
+ 
+-	/* Prepare file to store information. */
++    /* Prepare file to store information. */
+ 	snprintf(buf, sizeof(buf), "%s/data/%s", homedir, filename);
+ 	
+ 	/* Check if information must be written to a new file or appended to the end of an existing one. */
+@@ -1832,13 +1832,15 @@ dvb_dbc_callback
+ 		file = open(buf, O_WRONLY | O_APPEND);	
+ 	}
+ 
++   should_purge = !strcmp(filename + (i - 3), "xml");
++    
+ 	/* Purge any XML 1.0/ISO-8859-1 invalid characters from the data, because some people seem unable to do their
+ 	 * work properly... Tch! */
+ 	tmp = malloc(size * sizeof(unsigned char));
+ 
+ 	for (i = 0; i < size; i++) {
+ 	    test = ptr[j + i];
+-	    if (test < 0x20 && test != 0x9 && test != 0xa && test != 0xd) { test = 0x20; /* whitespace */ }
++	    if (should_purge && test < 0x20 && test != 0x9 && test != 0xa && test != 0xd) { test = 0x20; /* whitespace */ }
+ 	    tmp[i] = test;
+ 	}

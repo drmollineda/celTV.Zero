@@ -3,7 +3,7 @@ Description=TVHeadend42 Service
 After=network-online.service
 
 [Service]
-ExecStart=/bin/sh -c "exec sh /storage/.kodi/addons/service.tvheadend42/bin/tvheadend42.start"
+ExecStart=-/bin/sh -c "exec sh /usr/share/tvheadend/bin/tvheadend42.start"
 TimeoutStopSec=2
 Restart=always
 RestartSec=2
