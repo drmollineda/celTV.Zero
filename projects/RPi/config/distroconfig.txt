@@ -1,0 +1,7 @@
+dtparam=audio=on
+dtoverlay=i2c-gpio,i2c_gpio_sda=2,i2c_gpio_scl=22,bus=3
+dtoverlay=gpio-shutdown
+dtoverlay=gpio-ir,gpio_pin=17
+dtoverlay=pi-dtmb-hat
+dtoverlay=pi-fd
+dtoverlay=audremap,pins_18_19

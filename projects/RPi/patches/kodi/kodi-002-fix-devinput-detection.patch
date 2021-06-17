@@ -1,0 +1,20 @@
+--- a/xbmc/input/linux/LinuxInputDevices.cpp	2017-11-14 11:55:01.000000000 -0500
++++ b/xbmc/input/linux/LinuxInputDevices.cpp	2021-06-10 13:11:46.764796697 -0400
+@@ -966,7 +966,7 @@ void CLinuxInputDevice::GetInfo(int fd)
+     ioctl(fd, EVIOCGBIT(EV_KEY, sizeof(keybit)), keybit);
+ 
+     /**  count typical keyboard keys only */
+-    for (i = KEY_Q; i <= KEY_M; i++)
++    for (i = KEY_Q; i <= KEY_MICMUTE; i++)
+       if (test_bit( i, keybit ))
+         num_keys++;
+ 
+@@ -1021,7 +1021,7 @@ void CLinuxInputDevice::GetInfo(int fd)
+ #endif
+ 
+   /* A Keyboard, do we have at least some letters? */
+-  if (num_keys > 20)
++  if (num_keys)
+   {
+     m_deviceType |= LI_DEVICE_KEYBOARD;
+     m_deviceCaps |= LI_CAPS_KEYS;
