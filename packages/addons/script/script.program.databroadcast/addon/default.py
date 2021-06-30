@@ -18,13 +18,13 @@ from lib.parse import build_page_model_from_file, BASE_DIRS
 def create_background_image(cur, background):
     path_to_original_background = os.path.join(BASE_DIRS, background)
     path_to_textured_background = os.path.join(BASE_DIRS, '%s.png' % background)
+    path_to_ffmpegx_binary = os.path.join(cur, 'bin', 'ffmpegx')
 
-    try:
-        sys.path.extend([os.path.join(cur, 'bin'), os.path.join(cur, 'lib')])
-        xbmc.log(str(sys.path), xbmc.LOGWARNING)
-        subprocess.call(['ffmpeg', '-i', path_to_original_background, path_to_textured_background])
-    except Exception as e:
-        print e
+    if not os.path.exists(path_to_textured_background):
+        try:
+            subprocess.call([path_to_ffmpegx_binary, '-i', path_to_original_background, path_to_textured_background])
+        except Exception as e:
+            print e
 
     return path_to_textured_background
 

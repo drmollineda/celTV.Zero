@@ -51,7 +51,7 @@ if __name__ == '__main__':
     if player.isPlaying():
         player.stop()
 
-    variants = [full_scan, span_scan, pick_scan, lambda _: None]
+    variants = [full_scan, span_scan, pick_scan, lambda: None]
     scanner = variants[app.selected_scan]()
 
     success = False

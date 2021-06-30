@@ -82,7 +82,8 @@ class ChannelScanner(Thread):
     def build_mux_frequency_lookup(self, required):
         temp = [_.frequencyHz() for _ in required]
         full = {_['uuid']: int(_['frequency']) for _ in self.api.muxes.query(action='grid')()['entries']}
-        reqs = { k: v for k, v in full.items() if v in temp }
+        reqs = [(k, v) for k, v in full.items() if v in temp]
+        reqs.sort(key=lambda x: x[1])
 
         return full, reqs
 
@@ -102,7 +103,7 @@ class ChannelScanner(Thread):
 
         self.progress_listener.send(*self.build_scan_update_info(0, scan_size))
 
-        for index, mux_uuid in enumerate(muxes):
+        for index, (mux_uuid, freq) in enumerate(muxes):
             self.api.database.query(action='save', node={'uuid': mux_uuid, 'scan_state': 2})()
 
             while not (self.is_mux_scan_complete(mux_uuid) or not self.active()):

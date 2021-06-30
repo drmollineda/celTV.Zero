@@ -7,7 +7,8 @@ import xbmc
 from xbmcgui import WindowXMLDialog, Dialog
 
 from contextlib import contextmanager
-
+from api import Api
+from time import sleep
 
 class AppState(object):
     def __init__(self):
@@ -18,28 +19,22 @@ match = re.compile('\\d+\\.\\d+%')
 
 
 class SignalMonitor(Thread):
-    def __init__(self, receiver):
+    def __init__(self, receiver, api=Api()):
         super(SignalMonitor, self).__init__()
         self.receiver = receiver
+        self.api = api
 
     def run(self):
-        command = subprocess.Popen(['dvb-fe-tool', '-m'], stderr=subprocess.PIPE)
-
         while True:
-            line = command.stderr.readline()
+            data = self.api.status.query(action='inputs')()['entries'][0]
 
-            pieces = match.findall(line)
-
-            if not pieces:
-                continue
-
-            signal = float(pieces[0][:-1])
-            qualty = float(pieces[1][:-1])
+            signal = float(data['signal']) / 65535 * 100
+            qualty = float(data['snr']) / 65535 * 100
 
             if not self.receiver.send_stats(signal, qualty):
                 break
 
-        command.terminate()
+            sleep(1)
 
 
 class ScanProgressWindow(WindowXMLDialog):

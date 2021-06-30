@@ -51,3 +51,4 @@ class Api(object):
         self.channel_tags = ApiEndpoint(self.api_base + 'channeltag/%s')
         self.service_mapper = ApiEndpoint(self.api_base + 'service/mapper/%s')
         self.connections = ApiEndpoint(self.api_base + 'connections/%s')
+        self.status = ApiEndpoint(self.api_base + 'status/%s')
