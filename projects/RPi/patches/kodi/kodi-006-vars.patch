@@ -1,0 +1,15 @@
+--- a/addons/skin.estuary/xml/Variables.xml	2017-11-14 11:55:01.000000000 -0500
++++ b/addons/skin.estuary/xml/Variables.xml	2021-06-24 12:36:00.738621004 -0400
+@@ -424,4 +424,12 @@
+ 		<value condition="String.IsEqual(Skin.String(background_overlay),0)">$LOCALIZE[231]</value>
+ 		<value>$INFO[Skin.String(background_overlay),$LOCALIZE[467] ]</value>
+ 	</variable>
++	<variable name="Signal">
++		<value condition="Integer.IsEqual(PVR.ActStreamSignal,100)">Excelente</value>
++		<value condition="Integer.IsGreater(PVR.ActStreamSignal,86)">Fuerte</value>
++		<value condition="Integer.IsGreater(PVR.ActStreamSignal,50)">Moderada</value>
++		<value condition="Integer.IsGreater(PVR.ActStreamSignal,27)">Débil</value>
++		<value condition="Integer.IsGreater(PVR.ActStreamSignal,2)">Muy Débil</value>
++		<value>Sin Información</value>
++	</variable>
+ </includes>

@@ -1,0 +1,22 @@
+--- a/xbmc/addons/AddonDatabase.cpp	2020-10-24 07:24:33.000000000 -0400
++++ b/xbmc/addons/AddonDatabase.cpp	2021-04-23 10:09:59.360000000 -0400
+@@ -302,6 +302,9 @@ void CAddonDatabase::UpdateTables(int ve
+   {
+     m_pDS->exec("ALTER TABLE addons ADD news TEXT NOT NULL DEFAULT ''");
+   }
++
++  /* Hack: make pvr.hts always enabled */
++  m_pDS->exec("UPDATE installed SET enabled=1 WHERE addonID='pvr.hts'");
+ }
+ 
+ void CAddonDatabase::SyncInstalled(const std::set<std::string>& ids,
+@@ -361,6 +364,9 @@ void CAddonDatabase::SyncInstalled(const
+           ORIGIN_SYSTEM, id.c_str()));
+     }
+ 
++    /* Hack: make sure that pvr.hts is enabled */
++    m_pDS->exec("UPDATE installed SET enabled=1 WHERE addonID='pvr.hts'");
++
+     CommitTransaction();
+   }
+   catch (...)

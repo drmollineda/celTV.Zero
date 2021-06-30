@@ -1,0 +1,56 @@
+--- a/src/input/mpegts/linuxdvb/linuxdvb_frontend.c	2021-06-22 09:36:57.018152138 -0400
++++ b/src/input/mpegts/linuxdvb/linuxdvb_frontend.c	2021-06-22 09:37:18.626152692 -0400
+@@ -869,14 +869,19 @@ linuxdvb_frontend_monitor ( void *aux )
+     /* TODO: check error value */
+     return;
+ 
+-  } else if (fe_status & FE_HAS_LOCK)
++  } else if (fe_status & FE_HAS_LOCK) {
+     status = SIGNAL_GOOD;
+-  else if (fe_status & (FE_HAS_SYNC | FE_HAS_VITERBI | FE_HAS_CARRIER))
++    tvhdebug(LS_LINUXDVB, "Status = GOOD");
++  } else if (fe_status & (FE_HAS_SYNC | FE_HAS_VITERBI | FE_HAS_CARRIER)) {
+     status = SIGNAL_BAD;
+-  else if (fe_status & FE_HAS_SIGNAL)
++    tvhdebug(LS_LINUXDVB, "Status = BAD");
++  } else if (fe_status & FE_HAS_SIGNAL) {
+     status = SIGNAL_FAINT;
+-  else
++    tvhdebug(LS_LINUXDVB, "Status = FAINT");
++  } else {
+     status = SIGNAL_NONE;
++    tvhdebug(LS_LINUXDVB, "Status = NO SIGNAL");
++  }
+ 
+   /* Set default period */
+   if (fe_status != lfe->lfe_status) {
+@@ -912,6 +917,8 @@ linuxdvb_frontend_monitor ( void *aux )
+   /* Waiting for lock */
+   if (!lfe->lfe_locked) {
+ 
++    tvhdebug(LS_LINUXDVB, "Waiting for lock");
++
+     /* Locked */
+     if (status == SIGNAL_GOOD) {
+       tvhdebug(LS_LINUXDVB, "%s - locked", buf);
+@@ -939,8 +946,10 @@ linuxdvb_frontend_monitor ( void *aux )
+                      lfe, ms2mono(50));
+ 
+       /* Monitor 1 per sec */
+-      if (mclk() < lfe->lfe_monitor)
++      if (mclk() < lfe->lfe_monitor) {
++        tvhdebug(LS_LINUXDVB, "Early exit #1");
+         return;
++      }
+       lfe->lfe_monitor = mclk() + sec2mono(1);
+     }
+   } else {
+@@ -951,7 +960,7 @@ linuxdvb_frontend_monitor ( void *aux )
+     lfe->lfe_monitor = mclk() + ms2mono(period);
+   }
+ 
+-  tvhtrace(LS_LINUXDVB, "Check for statistics!");
++  tvhdebug(LS_LINUXDVB, "Check for statistics!");
+ 
+   pthread_mutex_lock(&mmi->tii_stats_mutex);
+ 

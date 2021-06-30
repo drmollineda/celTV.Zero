@@ -1,0 +1,151 @@
+diff --git a/addons/skin.estuary/xml/Custom_1110_TopBar.xml b/addons/skin.estuary/xml/Custom_1110_TopBar.xml
+new file mode 100644
+index 0000000..5afd3ce
+--- /dev/null
++++ b/addons/skin.estuary/xml/Custom_1110_TopBar.xml
+@@ -0,0 +1,31 @@
++<?xml version="1.0" encoding="utf-8"?>
++<window type="dialog" id="1110">
++	<visible>Window.IsActive(fullscreenvideo) | Window.IsActive(visualisation)</visible>
++	<!--<visible>Window.IsActive(seekbar) | Window.IsActive(pvrosdchannels) | Window.IsActive(pvrchannelguide)</visible>-->
++	<depth>DepthOSD</depth>
++	<include>Animation_TopSlide</include>
++	<zorder>0</zorder>
++	<controls>
++		<control type="group">
++			<animation effect="slide" end="0,-90" time="300" tween="sine" easing="inout" condition="$EXP[infodialog_active]">conditional</animation>
++			<depth>DepthBars</depth>
++
++			<control type="group">
++				<visible>!Window.IsVisible(extendedprogressdialog)</visible>
++				<animation effect="fade" time="150">VisibleChange</animation>
++					<control type="image">
++					<top>20</top>
++					<centerleft>50%</centerleft>
++				         
++						<width>100</width>
++						<height>80</height>
++						<fadetime>300</fadetime>
++						<aspectratio aligny="center" align="right">keep</aspectratio>
++						<texture>dialogs/volume/mute.png</texture>
++						<visible>Player.Muted</visible>
++					</control>
++				
++			</control>
++		</control>
++	</controls>
++</window>
+diff --git a/addons/skin.estuary/xml/Custom_1111_TopBar.xml b/addons/skin.estuary/xml/Custom_1111_TopBar.xml
+new file mode 100644
+index 0000000..85174f4
+--- /dev/null
++++ b/addons/skin.estuary/xml/Custom_1111_TopBar.xml
+@@ -0,0 +1,31 @@
++<?xml version="1.0" encoding="utf-8"?>
++<window type="dialog" id="1111">
++	<visible>Window.IsActive(fullscreenvideo) | Window.IsActive(visualisation)</visible>
++	<!--<visible>Window.IsActive(seekbar) | Window.IsActive(pvrosdchannels) | Window.IsActive(pvrchannelguide)</visible>-->
++	<depth>DepthOSD</depth>
++	<include>Animation_TopSlide</include>
++	<zorder>0</zorder>
++	<controls>
++		<control type="group">
++			<animation effect="slide" end="0,-90" time="300" tween="sine" easing="inout" condition="$EXP[infodialog_active]">conditional</animation>
++			<depth>DepthBars</depth>
++
++			<control type="group">
++				<visible>!Window.IsVisible(extendedprogressdialog)</visible>
++				<animation effect="fade" time="150">VisibleChange</animation>
++					<control type="image">
++					<top>20</top>
++					<left>1500</left>
++				         
++						<width>100</width>
++						<height>80</height>
++						<fadetime>300</fadetime>
++						<aspectratio aligny="center" align="right">keep</aspectratio>
++						<texture>icons/pvr/PVR-IsRecording.png</texture>
++						<visible>Pvr.IsRecordingTV</visible>
++					</control>
++				
++			</control>
++		</control>
++	</controls>
++</window>
+diff --git a/addons/skin.estuary/xml/DialogSeekBar.xml b/xml/DialogSeekBar.mod.xml
+index a66a724..3621136 100644
+--- a/addons/skin.estuary/xml/DialogSeekBar.xml
++++ b/addons/skin.estuary/xml/DialogSeekBar.xml
+@@ -42,7 +42,7 @@
+ 					<width>400</width>
+ 					<height>50</height>
+ 					<aligny>center</aligny>
+-					<font>font30</font>
++					<font>font13</font>
+ 					<wrapmultiline>true</wrapmultiline>
+ 					<label>[COLOR button_focus]$LOCALIZE[21396]:[CR][/COLOR]$INFO[player.chapter]$INFO[player.chaptercount, / ]</label>
+ 					<visible>player.chaptercount</visible>
+@@ -73,7 +73,7 @@
+ 					<height>50</height>
+ 					<align>right</align>
+ 					<aligny>center</aligny>
+-					<font>font30</font>
++					<font>font13</font>
+ 					<wrapmultiline>true</wrapmultiline>
+ 					<visible>!Window.IsActive(fullscreeninfo)</visible>
+ 					<animation effect="fade" time="200">VisibleChange</animation>
+@@ -219,7 +219,7 @@
+ 				<aligny>center</aligny>
+ 				<visible>VideoPlayer.HasEpg</visible>
+ 			</control>
+-			<control type="label">
++			<!-- <control type="label">
+ 				<left>260</left>
+ 				<right>50</right>
+ 				<top>20</top>
+@@ -237,10 +237,44 @@
+ 				<label fallback="416">$INFO[VideoPlayer.Plot]</label>
+ 				<align>justify</align>
+ 				<autoscroll delay="5000" repeat="7500" time="5000"></autoscroll>
++			</control> -->
++			<control type="label">
++				<left>260</left>
++				<top>85</top>
++				<width>600</width>
++				<height>50</height>
++				<aligny>bottom</aligny>
++				<label>$INFO[PVR.ActStreamSignal,[COLOR button_focus]Intensidad:[/COLOR]]</label>
++				<font>font14</font>
++				<shadowcolor>black</shadowcolor>
++			</control>
++			<control type="progress">
++				<left>260</left>
++				<top>135</top>
++				<width>600</width>
++				<height>18</height>
++				<info>PVR.ActStreamProgrSignal</info>
++			</control>
++			<control type="label">
++				<left>260</left>
++				<top>165</top>
++				<width>600</width>
++				<height>50</height>
++				<aligny>bottom</aligny>
++				<label>$INFO[PVR.ActStreamSNR,[COLOR button_focus]Calidad:[/COLOR]]</label>
++				<font>font14</font>
++				<shadowcolor>black</shadowcolor>
++			</control>
++			<control type="progress">
++				<left>260</left>
++				<top>215</top>
++				<width>600</width>
++				<height>18</height>
++				<info>PVR.ActStreamProgrSNR</info>
+ 			</control>
+ 			<control type="grouplist">
+ 				<left>260</left>
+-				<top>175</top>
++				<top>235</top>
+ 				<width>600</width>
+ 				<height>100</height>
+ 				<align>left</align>

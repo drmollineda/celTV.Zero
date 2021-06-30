@@ -1,8 +1,65 @@
 <settings>
-  <debug>
-    <screenshotpath pathversion="1">/storage/screenshots/</screenshotpath>
-  </debug>
-  <general>
-    <settinglevel>2</settinglevel>
-  </general>
+    <debug>
+        <screenshotpath pathversion="1">/storage/screenshots/</screenshotpath>
+    </debug>
+    <audiooutput>
+        <plladjust>4</plladjust>
+        <audiodevice>PI:Both</audiodevice>
+    </audiooutput>
+    <epg>
+        <daystodisplay default="true">3</daystodisplay>
+    </epg>
+    <general>
+        <settinglevel>2</settinglevel>
+    </general>
+    <locale>
+        <language>resource.language.es_es</language>
+        <timezone>America/Havana</timezone>
+        <timezonecountry>Cuba</timezonecountry>
+        <use24hourclock default="true">regional</use24hourclock>
+    </locale>
+    <pvrmanager>
+        <backendchannelorder default="true">true</backendchannelorder>
+        <hideconnectionlostwarning default="true">false</hideconnectionlostwarning>
+        <syncchannelgroups default="true">false</syncchannelgroups>
+        <usebackendchannelnumbers>true</usebackendchannelnumbers>
+    </pvrmanager>
+    <pvrmenu>
+        <closechannelosdonswitch default="true">true</closechannelosdonswitch>
+        <displaychannelinfo default="true">5</displaychannelinfo>
+        <iconpath default="true"></iconpath>
+    </pvrmenu>
+    <pvrplayback>
+        <channelentrytimeout default="true">0</channelentrytimeout>
+        <confirmchannelswitch default="true">false</confirmchannelswitch>
+        <enableradiords default="true">true</enableradiords>
+        <fps default="true">0</fps>
+        <playminimized default="true">true</playminimized>
+        <scantime default="true">10</scantime>
+        <signalquality>true</signalquality>
+        <startlast default="true">0</startlast>
+        <trafficadvisory default="true">false</trafficadvisory>
+        <trafficadvisoryvolume default="true">10</trafficadvisoryvolume>
+    </pvrplayback>
+    <pvrrecord>
+        <defaultlifetime default="true">99</defaultlifetime>
+        <defaultpriority default="true">50</defaultpriority>
+        <grouprecordings default="true">true</grouprecordings>
+        <instantrecordaction default="true">1</instantrecordaction>
+        <instantrecordtime default="true">360</instantrecordtime>
+        <marginend default="true">0</marginend>
+        <marginstart default="true">0</marginstart>
+        <preventduplicateepisodes default="true">0</preventduplicateepisodes>
+        <timernotifications default="true">true</timernotifications>
+    </pvrrecord>
+    <lookandfeel>
+        <skincolors>concrete</skincolors>
+        <startupwindow>10000</startupwindow>
+        <startupaction>1</startupaction>
+    </lookandfeel>
+    <videoplayer>
+        <stretch43 default="true">4</stretch43>
+        <adjustrefreshrate>1</adjustrefreshrate>
+        <limitguiupdate>0</limitguiupdate>
+    </videoplayer>
 </settings>

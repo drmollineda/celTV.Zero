@@ -1,0 +1,14 @@
+--- a/xbmc/windowing/egl/WinSystemEGL.cpp	2017-11-14 11:55:01.000000000 -0500
++++ b/xbmc/windowing/egl/WinSystemEGL.cpp	2021-06-18 11:05:18.677793358 -0400
+@@ -426,6 +426,11 @@ void CWinSystemEGL::UpdateResolutions()
+     res_index = (RESOLUTION)((int)res_index + 1);
+   }
+ 
++  if (!CSettings::GetInstance().SetString(CSettings::SETTING_AUDIOOUTPUT_AUDIODEVICE, resolutions.size() > 1 ? "PI:Both" : "PI:Analogue"))
++  {
++    CLog::Log(LOGNOTICE, "Failed to adjust audio output device");
++  }
++
+   // swap desktop index for desktop res if available
+   if (ResDesktop != RES_INVALID)
+   {

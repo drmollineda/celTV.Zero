@@ -345,7 +345,7 @@ post_makeinstall_target() {
     REQUIRED_DEPS="plugin.video.picta script.module.certifi script.module.urllib3\
      script.module.chardet script.module.idna script.module.requests inputstream.adaptive\
      script.program.channelscanner script.program.databroadcast\
-     script.program.usbupdate"
+     script.program.usbupdate resource.language.es_es"
     
     for addon in $REQUIRED_DEPS; do
       xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "$addon" $ADDON_MANIFEST

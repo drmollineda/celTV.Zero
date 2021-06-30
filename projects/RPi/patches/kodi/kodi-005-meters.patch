@@ -1,0 +1,38 @@
+--- a/addons/skin.estuary/xml/DialogPlayerProcessInfo.xml	2017-11-14 11:55:01.000000000 -0500
++++ b/addons/skin.estuary/xml/DialogPlayerProcessInfo.xml	2021-06-24 12:31:54.434614698 -0400
+@@ -74,7 +74,7 @@
+ 				<top>-204</top>
+ 				<visible>Control.HasFocus(5551)</visible>
+ 				<usecontrolcoords>true</usecontrolcoords>
+-				<control type="label">
++				<!-- <control type="label">
+ 					<width>600</width>
+ 					<height>50</height>
+ 					<aligny>bottom</aligny>
+@@ -89,7 +89,7 @@
+ 					<label>$INFO[PVR.ActStreamUnc,[COLOR button_focus]$LOCALIZE[19011]:[/COLOR] ]</label>
+ 					<font>font14</font>
+ 					<shadowcolor>black</shadowcolor>
+-				</control>
++				</control> -->
+ 				<control type="label">
+ 					<width>600</width>
+ 					<height>50</height>
+@@ -102,7 +102,7 @@
+ 					<width>600</width>
+ 					<height>50</height>
+ 					<aligny>bottom</aligny>
+-					<label>$INFO[PVR.ActStreamSignal,[COLOR button_focus]$LOCALIZE[19008]:[/COLOR] ]</label>
++					<label>$INFO[PVR.ActStreamSignal,[COLOR button_focus]Intensidad:[/COLOR] ] - $VAR[Signal]</label>
+ 					<font>font14</font>
+ 					<shadowcolor>black</shadowcolor>
+ 				</control>
+@@ -117,7 +117,7 @@
+ 					<width>1600</width>
+ 					<height>50</height>
+ 					<aligny>bottom</aligny>
+-					<label>$INFO[PVR.ActStreamSNR,[COLOR button_focus]$LOCALIZE[19009]:[/COLOR] ]</label>
++					<label>$INFO[PVR.ActStreamSNR,[COLOR button_focus]Calidad:[/COLOR] ]</label>
+ 					<font>font14</font>
+ 					<shadowcolor>black</shadowcolor>
+ 				</control>

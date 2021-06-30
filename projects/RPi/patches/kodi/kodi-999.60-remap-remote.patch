@@ -1,0 +1,11 @@
+--- a/system/keymaps/remote.xml	2017-11-14 11:55:01.000000000 -0500
++++ b/system/keymaps/remote.xml	2021-06-24 12:15:47.306589934 -0400
+@@ -216,7 +216,7 @@
+   <FullscreenInfo>
+     <remote>
+       <title>PlayerProcessInfo</title>
+-      <info>Back</info>
++      <info>PlayerProcessInfo</info>
+       <menu>OSD</menu>
+       <contentsmenu>OSD</contentsmenu>
+       <rootmenu>OSD</rootmenu>

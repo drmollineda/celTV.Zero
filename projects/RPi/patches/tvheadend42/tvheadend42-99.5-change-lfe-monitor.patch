@@ -1,0 +1,24 @@
+--- a/src/input/mpegts/linuxdvb/linuxdvb_frontend.c	2021-06-21 13:48:31.392326358 -0400
++++ b/src/input/mpegts/linuxdvb/linuxdvb_frontend.c	2021-06-21 14:22:39.076378789 -0400
+@@ -944,8 +944,10 @@ linuxdvb_frontend_monitor ( void *aux )
+       lfe->lfe_monitor = mclk() + sec2mono(1);
+     }
+   } else {
+-    if (mclk() < lfe->lfe_monitor)
++    if (mclk() < lfe->lfe_monitor) {
++      tvhtrace(LS_LINUXDVB, "Too soon");
+       return;
++    }
+     lfe->lfe_monitor = mclk() + ms2mono(period);
+   }
+ 
+@@ -1943,8 +1945,7 @@ linuxdvb_frontend_tune1
+ 
+   /* Start monitor */
+   if (!r) {
+-    time(&lfe->lfe_monitor);
+-    lfe->lfe_monitor += 4;
++    lfe->lfe_monitor = mclk() + sec2mono(4);
+     mtimer_arm_rel(&lfe->lfe_monitor_timer, linuxdvb_frontend_monitor, lfe, ms2mono(50));
+     lfe->lfe_ready = 1;
+   }
