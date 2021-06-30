@@ -6,7 +6,7 @@ import xbmcgui
 
 def main():
     d = xbmcgui.Dialog()
-    filepath = d.browseSingle(1, 'Seleccione el fichero para actualizar', '', '.tar|.tar.gz', defaultt='')
+    filepath = d.browseSingle(1, 'Seleccione el fichero para actualizar', 'files', '.tar|.tar.gz', defaultt='')
 
     if not filepath:
         return

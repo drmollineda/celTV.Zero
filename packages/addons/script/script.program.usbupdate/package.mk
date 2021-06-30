@@ -22,7 +22,4 @@ make_target() {
 makeinstall_target() {
 	mkdir -p $INSTALL/usr/share/kodi/addons/${PKG_NAME}
 	cp -rP $PKG_DIR/addon/* $INSTALL/usr/share/kodi/addons/${PKG_NAME}
-
-	mkdir -p $INSTALL/usr/share/kodi/addons/${PKG_NAME}/bin
-	cp -L $(get_build_dir ffmpegx)/.INSTALL_PKG/usr/local/bin/* $INSTALL/usr/share/kodi/addons/${PKG_NAME}/bin
 }

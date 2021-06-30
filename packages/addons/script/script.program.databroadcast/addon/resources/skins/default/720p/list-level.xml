@@ -10,7 +10,7 @@
             <height>100%</height>
             <texture>$INFO[Window.Property(dbc_background)]</texture>
         </control>
-        
+
         <control type="image">
             <width>480</width>
             <height>32</height>
@@ -24,10 +24,10 @@
             <top>4</top>
             <left>4</left>
             <align>center</align>
-            <!-- <aligny>center</aligny> -->
+            <aligny>center</aligny>
             <label>$INFO[System.Date]</label>
         </control>
-        
+
         <!-- Base container -->
         <control type="group">
             <centerleft>50%</centerleft>
@@ -64,7 +64,7 @@
                         <centerleft>50%</centerleft>
                         <width>157</width>
                         <align>center</align>
-                        <!-- <aligny>center</aligny> -->
+                        <!--<aligny>center</aligny>-->
                         <label>$INFO[ListItem.Label]</label>
                     </control>
                     <control type="image">
@@ -85,7 +85,7 @@
                         <centerleft>50%</centerleft>
                         <width>157</width>
                         <align>center</align>
-                        <!-- <aligny>center</aligny> -->
+                        <!--<aligny>center</aligny>-->
                         <label>$INFO[ListItem.Label]</label>
                     </control>
                     <control type="image">
@@ -111,8 +111,8 @@
                 <itemlayout height="32">
                     <control type="label">
                         <width>690</width>
-                        <align>left</align>
                         <left>12</left>
+                        <align>left</align>
                         <aligny>center</aligny>
                         <label>$INFO[ListItem.Label]</label>
                     </control>
@@ -120,13 +120,14 @@
                 <focusedlayout height="32">
                     <control type="image">
                         <texture colordiffuse="button_focus">colors/grey.png</texture>
+                        <!--<include>Animation_FocusTextureFade</include>-->
                     </control>
                     <control type="label">
+                        <left>12</left>
                         <width>690</width>
                         <align>left</align>
-                        <left>12</left>
-                        <scroll>true</scroll>
                         <aligny>center</aligny>
+                        <scroll>true</scroll>
                         <label>$INFO[ListItem.Label]</label>
                     </control>
                 </focusedlayout>
@@ -154,7 +155,7 @@
                     <width>710</width>
                     <height>32</height>
                     <align>left</align>
-                    <aligny>center</aligny>
+                    <!--<aligny>center</aligny>-->
                     <label>Placeholder text</label>
                     <font>Mono26</font>
                 </control>
@@ -166,7 +167,7 @@
                     <centerleft>50%</centerleft>
                     <itemlayout height="32">
                         <control type="label">
-                            <!-- <centerleft>50%</centerleft> -->
+                            <!--<centerleft>50%</centerleft>-->
                             <width>710</width>
                             <align>left</align>
                             <aligny>center</aligny>
@@ -177,9 +178,10 @@
                     <focusedlayout height="32">
                         <control type="image">
                             <texture colordiffuse="button_focus">colors/grey.png</texture>
+                            <!--<include>Animation_FocusTextureFade</include>-->
                         </control>
                         <control type="label">
-                            <!-- <centerleft>50%</centerleft> -->
+                            <!--<centerleft>50%</centerleft>-->
                             <width>710</width>
                             <align>left</align>
                             <aligny>center</aligny>
